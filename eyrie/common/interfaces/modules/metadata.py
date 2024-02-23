@@ -58,7 +58,7 @@ class ModuleMetadata(TypedDict):
     """
     providers: NotRequired[list[type | Callable | ProviderConfig | None]]
     """
-    Optional list of providers that will be instantiated by the Nest injector and
+    Optional list of providers that will be instantiated by the Eyrie injector and
     that may be shared at least across this module.
     """
     controllers: NotRequired[list[type | Callable | None]]
