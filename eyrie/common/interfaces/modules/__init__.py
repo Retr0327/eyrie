@@ -3,5 +3,6 @@ from .metadata import (
     ProviderConfig,
     ProviderScope,
 )
+from .module import EyrieModule
 
-__all__ = ["ModuleMetadata", "ProviderConfig", "ProviderScope"]
+__all__ = ["ModuleMetadata", "ProviderConfig", "ProviderScope", "EyrieModule"]
