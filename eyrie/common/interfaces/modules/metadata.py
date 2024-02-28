@@ -32,8 +32,7 @@ class ProviderConfig(TypedDict):
     """
     The scope of the injection token which determines the lifecycle of the provided
     instances. It should be one of the predefined scopes in `ProviderScope`. See
-    more about scopes at
-    [providers](https://python-dependency-injector.ets-labs.org/providers/index.html).
+    more about scopes at [providers](https://python-dependency-injector.ets-labs.org/providers/index.html).
     """
     inject: NotRequired[list[str | Callable | type | dict]]
     """
