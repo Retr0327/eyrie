@@ -24,6 +24,7 @@ from .decorators import (
 )
 from .enums import RequestMethod
 from .interfaces import (
+    CanActivate,
     EyrieGlobalMiddleware,
     EyrieMiddleware,
     EyrieModule,
@@ -59,6 +60,7 @@ __all__ = [
     "UseGuards",
     "create_mapping_decorator",
     "RequestMethod",
+    "CanActivate",
     "EyrieGlobalMiddleware",
     "EyrieMiddleware",
     "EyrieModule",

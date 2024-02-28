@@ -1,3 +1,4 @@
+from .features import CanActivate
 from .http import HTTPMethodType
 from .middlewares import (
     EyrieGlobalMiddleware,
@@ -15,6 +16,7 @@ from .modules import (
 )
 
 __all__ = [
+    "CanActivate",
     "HTTPMethodType",
     "EyrieGlobalMiddleware",
     "EyrieMiddleware",
