@@ -7,7 +7,6 @@ repos:
       - id: check-json
       - id: check-yaml
       - id: end-of-file-fixer
-      - id: check-docstring-first
       - id: debug-statements
         language_version: python3
   - repo: local
@@ -38,5 +37,3 @@ repos:
     hooks:
       - id: pyupgrade
         args: [--py39-plus]
-
- 
