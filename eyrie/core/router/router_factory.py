@@ -14,6 +14,7 @@ from eyrie.core.errors import (
     InvalidControllerHTTPMethodException,
     UnknownControllerHTTPMethodPathException,
 )
+from eyrie.core.utils import sanitize_path
 
 from .proxy import RouterProxy
 
@@ -23,6 +24,7 @@ T = TypeVar("T")
 @dataclass(slots=True)
 class RouterFactory:
     controller: type[T]
+    global_prefix: str = ""
 
     def _check_controller_method(self, method: FunctionType):
         if not hasattr(method, MetaData.REQUEST_METHOD_PATH):
@@ -35,29 +37,23 @@ class RouterFactory:
                 method=method.method, controller=self.controller
             )
 
-    def _sanitize_path(self, prefix: str | None, path: str):
-        combined_path = f"{prefix}{path}" if prefix else path
-        if not combined_path.startswith("/"):
-            return f"/{combined_path}"
-        elif combined_path.endswith("/"):
-            return combined_path[:-1]
-        else:
-            return combined_path
-
     def create(self) -> type[T]:
         router_config = getattr(self.controller, MetaData.CONTROLLER_SCOPE, {})
-        prefix = router_config.pop("prefix", None)
+        controller_prefix = router_config.pop("prefix", None)
         router = APIRouter(**router_config)
         controller_methods = inspect.getmembers(self.controller, inspect.isfunction)
         for _, method in controller_methods:
             if not hasattr(method, "method"):
                 continue
             ExceptionsZone.run(lambda: self._check_controller_method(method))
-            path = self._sanitize_path(
-                prefix, getattr(method, MetaData.REQUEST_METHOD_PATH)
+            controller_path = sanitize_path(
+                controller_prefix, getattr(method, MetaData.REQUEST_METHOD_PATH)
             )
             router.add_api_route(
-                path=path, endpoint=method, methods=[method.method], **method.__kwargs__
+                path=sanitize_path(self.global_prefix, controller_path),
+                endpoint=method,
+                methods=[method.method],
+                **method.__kwargs__,
             )
 
         setattr(self.controller, "router", router)
