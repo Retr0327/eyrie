@@ -1,4 +1,10 @@
-exclude: ^LICENSE/|\.(pickle|ipynb)$
+exclude: ^LICENSE/|\.(ipynb|html|svg)$
+
+ci:
+    autofix_prs: false
+    autoupdate_schedule: weekly
+    autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
@@ -17,9 +23,9 @@ repos:
         language: python
         require_serial: true
         types_or: [python, pyi]
-        additional_dependencies: [black==24.1.1]
+        additional_dependencies: [black==24.3.0]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.2.1
+    rev: v0.3.4
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
@@ -33,7 +39,7 @@ repos:
     hooks:
       - id: isort
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.15.0
+    rev: v3.15.2
     hooks:
       - id: pyupgrade
         args: [--py39-plus]
