@@ -21,7 +21,10 @@ jobs:
       - name: Sphinx build
         run: |
           sphinx-build doc/source doc/build
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: doc/build
+      - name: Build HTML
+        run: | 
+          cd doc/
+          make html
+      - name: Run ghp-import
+        run: | 
+          ghp-import -n -p -f doc/build/html
